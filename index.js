@@ -68,6 +68,16 @@ app.put('/todos/:id', (req, res) => {
   res.json(todos[todoIndex]);
 })
 
+//DELETE
+app.delete('/todos/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const todoIndex = todos.findIndex(todo => todo.id === id);
+  if (todoIndex === -1) return res.status(404).json({error:`Todo with id:${id} not found`});
+
+  const deletedTodo = todos.splice(todoIndex, 1)[0];
+  res.json({message:`Todo with id:${id} deleted`, todo:deletedTodo});
+})
+
 app.listen(PORT, () => 
   console.log(`Server running at http://localhost:${PORT}`)
 )
